@@ -69,9 +69,7 @@ def all(predicate: Predicate[_T]) -> Callable[[Observable[_T]], Observable[bool]
         determining whether all elements in the source sequence pass
         the test in the specified predicate.
     """
-    from ._all import all_
-
-    return all_(predicate)
+    pass
 
 
 def amb(right_source: Observable[_T]) -> Callable[[Observable[_T]], Observable[_T]]:
@@ -204,9 +202,7 @@ def buffer_when(
         A function that takes an observable source and returns an
         observable sequence of windows.
     """
-    from ._buffer import buffer_when_
-
-    return buffer_when_(closing_mapper)
+    pass
 
 
 def buffer_toggle(
@@ -240,9 +236,7 @@ def buffer_toggle(
         A function that takes an observable source and returns an
         observable sequence of windows.
     """
-    from ._buffer import buffer_toggle_
-
-    return buffer_toggle_(openings, closing_mapper)
+    pass
 
 
 def buffer_with_count(
@@ -476,8 +470,7 @@ def concat_map(
         and emits its values in order.
 
     """
-
-    return compose(map(project), merge(max_concurrent=1))
+    pass
 
 
 def contains(
@@ -647,9 +640,7 @@ def delay_subscription(
         A function that take a source observable and returns a
         time-shifted observable sequence.
     """
-    from ._delaysubscription import delay_subscription_
-
-    return delay_subscription_(duetime, scheduler=scheduler)
+    pass
 
 
 def delay_with_mapper(
@@ -841,9 +832,7 @@ def do(observer: abc.ObserverBase[_T]) -> Callable[[Observable[_T]], Observable[
         returns the source sequence with the side-effecting behavior
         applied.
     """
-    from ._do import do_
-
-    return do_(observer)
+    pass
 
 
 def do_action(
@@ -993,9 +982,7 @@ def exclusive() -> Callable[[Observable[Observable[_T]]], Observable[_T]]:
         An exclusive observable with only the results that
         happen when subscribed.
     """
-    from ._exclusive import exclusive_
-
-    return exclusive_()
+    pass
 
 
 def expand(
@@ -1040,9 +1027,7 @@ def filter(predicate: Predicate[_T]) -> Callable[[Observable[_T]], Observable[_T
         returns an observable sequence that contains elements from the
         input sequence that satisfy the condition.
     """
-    from ._filter import filter_
-
-    return filter_(predicate)
+    pass
 
 
 def filter_indexed(
@@ -1162,12 +1147,7 @@ def find_index(
         first occurrence of an element that matches the conditions
         defined by match, if found; otherwise, -1.
     """
-    from ._find import find_value_
-
-    return cast(
-        Callable[[Observable[_T]], Observable[int | None]],
-        find_value_(predicate, True),
-    )
+    pass
 
 
 def first(
@@ -1373,9 +1353,7 @@ def flat_map_indexed(
         invoking the one-to-many transform function on each element of
         the input sequence.
     """
-    from ._flatmap import flat_map_indexed_
-
-    return flat_map_indexed_(mapper_indexed)
+    pass
 
 
 def flat_map_latest(
@@ -1400,9 +1378,7 @@ def flat_map_latest(
         point in time produces the elements of the most recent inner
         observable sequence that has been received.
     """
-    from ._flatmap import flat_map_latest_
-
-    return flat_map_latest_(mapper)
+    pass
 
 
 def fork_join(
@@ -1584,9 +1560,7 @@ def ignore_elements() -> Callable[[Observable[_T]], Observable[_T]]:
         returns an empty observable sequence that signals termination,
         successful or exceptional, of the source sequence.
     """
-    from ._ignoreelements import ignore_elements_
-
-    return ignore_elements_()
+    pass
 
 
 def is_empty() -> Callable[[Observable[Any]], Observable[bool]]:
@@ -1765,9 +1739,7 @@ def map(
         the result of invoking the transform function on each element
         of the source.
     """
-    from ._map import map_
-
-    return map_(mapper)
+    pass
 
 
 def map_indexed(
@@ -1841,9 +1813,7 @@ def max(
         source and returns an observable sequence containing a single
         element with the maximum element in the source sequence.
     """
-    from ._max import max_
-
-    return max_(comparer)
+    pass
 
 
 def max_by(
@@ -1965,9 +1935,7 @@ def min(
         returns an observable sequence containing a single element
         with the minimum element in the source sequence.
     """
-    from ._min import min_
-
-    return min_(comparer)
+    pass
 
 
 def min_by(
@@ -2163,9 +2131,7 @@ def partition(
         predicate returns True, and the second triggers when the
         predicate returns False.
     """
-    from ._partition import partition_
-
-    return partition_(predicate)
+    pass
 
 
 def partition_indexed(
@@ -2198,9 +2164,7 @@ def partition_indexed(
         returns True, and the second triggers when the predicate
         returns False.
     """
-    from ._partition import partition_indexed_
-
-    return partition_indexed_(predicate_indexed)
+    pass
 
 
 def pluck(
@@ -2218,9 +2182,7 @@ def pluck(
         An operator function that takes an observable source and
         returns a new observable sequence of key values.
     """
-    from ._pluck import pluck_
-
-    return pluck_(key)
+    pass
 
 
 def pluck_attr(prop: str) -> Callable[[Observable[Any]], Observable[Any]]:
@@ -2237,9 +2199,7 @@ def pluck_attr(prop: str) -> Callable[[Observable[Any]], Observable[Any]]:
         An operator function that takes an observable source and
         returns a new observable sequence of property values.
     """
-    from ._pluck import pluck_attr_
-
-    return pluck_attr_(prop)
+    pass
 
 
 @overload
@@ -2492,9 +2452,7 @@ def replay(
         sequence produced by multicasting the source sequence within a
         mapper function.
     """
-    from ._replay import replay_
-
-    return replay_(mapper, buffer_size, window, scheduler=scheduler)
+    pass
 
 
 def retry(
@@ -2516,9 +2474,7 @@ def retry(
         An observable sequence producing the elements of the given
         sequence repeatedly until it terminates successfully.
     """
-    from ._retry import retry_
-
-    return retry_(retry_count)
+    pass
 
 
 def sample(
@@ -2653,9 +2609,7 @@ def share() -> Callable[[Observable[_T]], Observable[_T]]:
         source
         Observable.
     """
-    from ._publish import share_
-
-    return share_()
+    pass
 
 
 def single(
@@ -2734,9 +2688,7 @@ def single_or_default(
 def single_or_default_async(
     has_default: bool = False, default_value: _T = None
 ) -> Callable[[Observable[_T]], Observable[_T]]:
-    from ._singleordefault import single_or_default_async_
-
-    return single_or_default_async_(has_default, default_value)
+    pass
 
 
 def skip(count: int) -> Callable[[Observable[_T]], Observable[_T]]:
@@ -3034,9 +2986,7 @@ def slice(
         An operator function that takes an observable source and
         returns a sliced observable sequence.
     """
-    from ._slice import slice_
-
-    return slice_(start, stop, step)
+    pass
 
 
 def some(
@@ -3120,12 +3070,12 @@ def starmap(
     if mapper is None:
 
         def identity_fn(x: Any) -> Any:
-            return x
+            pass
 
         return compose(map(identity_fn))
 
     def starred(values: tuple[Unpack[_Ts]]) -> _T:
-        return mapper(*values)
+        pass
 
     return compose(map(starred))
 
@@ -3160,7 +3110,7 @@ def starmap_indexed(
     """
 
     def starred(indexed_values: tuple[Unpack[_Ts], int]) -> _T:
-        return mapper(*indexed_values)
+        pass
 
     return compose(map(starred))
 
@@ -3253,9 +3203,7 @@ def sum(
         an observable sequence containing a single element with the sum
         of the values in the source sequence.
     """
-    from ._sum import sum_
-
-    return sum_(key_mapper)
+    pass
 
 
 def switch_latest() -> (
@@ -3882,9 +3830,7 @@ def to_future(
         An operator function that takes an observable source and returns
         a future with the last value from the observable sequence.
     """
-    from ._tofuture import to_future_
-
-    return to_future_(future_ctor)
+    pass
 
 
 def to_iterable() -> Callable[[Observable[_T]], Observable[list[_T]]]:
@@ -3919,9 +3865,7 @@ def to_marbles(
     Returns:
         Observable stream.
     """
-    from ._tomarbles import to_marbles
-
-    return to_marbles(scheduler=scheduler, timespan=timespan)
+    pass
 
 
 def to_set() -> Callable[[Observable[_T]], Observable[set[_T]]]:
@@ -4177,9 +4121,7 @@ def zip(*args: Observable[Any]) -> Callable[[Observable[Any]], Observable[Any]]:
         returns an observable sequence containing the result of
         combining elements of the sources as a tuple.
     """
-    from ._zip import zip_
-
-    return zip_(*args)
+    pass
 
 
 def zip_with_iterable(

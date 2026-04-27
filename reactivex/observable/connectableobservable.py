@@ -51,32 +51,4 @@ class ConnectableObservable(Observable[_T]):
         result in emissions firing immediately without waiting for
         subscribers.
         """
-
-        connectable_subscription: list[abc.DisposableBase | None] = [None]
-        count = [0]
-        source = self
-        is_connected = [False]
-
-        if subscriber_count == 0:
-            connectable_subscription[0] = source.connect()
-            is_connected[0] = True
-
-        def subscribe(
-            observer: abc.ObserverBase[_T],
-            scheduler: abc.SchedulerBase | None = None,
-        ) -> abc.DisposableBase:
-            count[0] += 1
-            should_connect = count[0] == subscriber_count and not is_connected[0]
-            subscription = source.subscribe(observer)
-            if should_connect:
-                connectable_subscription[0] = source.connect(scheduler)
-                is_connected[0] = True
-
-            def dispose() -> None:
-                subscription.dispose()
-                count[0] -= 1
-                is_connected[0] = False
-
-            return Disposable(dispose)
-
-        return Observable(subscribe)
+        pass

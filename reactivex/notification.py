@@ -95,9 +95,7 @@ class Notification(Generic[_T]):
     def equals(self, other: "Notification[_T]") -> bool:
         """Indicates whether this instance and a specified object are
         equal."""
-
-        other_string = "" if not other else str(other)
-        return str(self) == other_string
+        pass
 
     def __eq__(self, other: Any) -> bool:
         return self.equals(other)
@@ -193,14 +191,4 @@ def from_notifier(handler: Callable[[Notification[_T]], None]) -> Observer[_T]:
         The observer object that invokes the specified handler using
         a notification corresponding to each message it receives.
     """
-
-    def _on_next(value: _T) -> None:
-        return handler(OnNext(value))
-
-    def _on_error(error: Exception) -> None:
-        return handler(OnError(error))
-
-    def _on_completed() -> None:
-        return handler(OnCompleted())
-
-    return Observer(_on_next, _on_error, _on_completed)
+    pass

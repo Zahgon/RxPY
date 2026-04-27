@@ -22,39 +22,7 @@ def from_callback_(
         the callback, produces an Observable sequence with a single value of
         the arguments to the callback as a list.
     """
-
-    def function(*args: Any) -> Observable[Any]:
-        arguments = list(args)
-
-        def subscribe(
-            observer: abc.ObserverBase[Any],
-            scheduler: abc.SchedulerBase | None = None,
-        ) -> abc.DisposableBase:
-            def handler(*args: Any) -> None:
-                results = list(args)
-                if mapper:
-                    try:
-                        results = mapper(args)
-                    except Exception as err:  # pylint: disable=broad-except
-                        observer.on_error(err)
-                        return
-
-                    observer.on_next(results)
-                else:
-                    if len(results) <= 1:
-                        observer.on_next(*results)
-                    else:
-                        observer.on_next(results)
-
-                    observer.on_completed()
-
-            arguments.append(handler)
-            func(*arguments)
-            return Disposable()
-
-        return Observable(subscribe)
-
-    return function
+    pass
 
 
 __all__ = ["from_callback_"]

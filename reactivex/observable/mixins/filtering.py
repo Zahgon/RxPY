@@ -58,9 +58,7 @@ class FilteringMixin(Generic[_T]):
             - :func:`filter <reactivex.operators.filter>`
             - :meth:`filter_indexed`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.filter(predicate))
+        pass
 
     def take(self, count: int) -> Observable[Any]:
         """Return a specified number of contiguous elements from the start.
@@ -707,11 +705,7 @@ class FilteringMixin(Generic[_T]):
             - :meth:`single_or_default`
             - :meth:`single`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(
-            ops.single_or_default_async(has_default, default_value)
-        )
+        pass
 
     def element_at_or_default(
         self, index: int, default_value: _T | None = None
@@ -874,9 +868,7 @@ class FilteringMixin(Generic[_T]):
             - :meth:`skip`
             - :meth:`take`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.slice(start, stop, step))
+        pass
 
     def take_last_buffer(self, count: int) -> Observable[list[_T]]:
         """Take last N elements as a buffer.

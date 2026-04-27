@@ -81,10 +81,10 @@ def skip_while_indexed_(
     """
 
     def indexer(x: _T, i: int) -> tuple[_T, int]:
-        return (x, i)
+        pass
 
     def skipper(x: tuple[_T, int]) -> bool:
-        return predicate(*x)
+        pass
 
     def mapper(x: tuple[_T, int]) -> _T:
         return x[0]

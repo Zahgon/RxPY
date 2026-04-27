@@ -81,7 +81,7 @@ def compose(*operators: Callable[[Any], Any]) -> Callable[[Any], Any]:
     """
 
     def _compose(source: Any) -> Any:
-        return reduce(lambda obs, op: op(obs), operators, source)
+        pass
 
     return _compose
 

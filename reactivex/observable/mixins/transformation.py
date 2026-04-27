@@ -68,9 +68,7 @@ class TransformationMixin(Generic[_T]):
             - :func:`map <reactivex.operators.map>`
             - :meth:`map_indexed`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.map(mapper))
+        pass
 
     @overload
     def reduce(self, accumulator: typing.Accumulator[_T, _T]) -> Observable[_T]: ...
@@ -238,9 +236,7 @@ class TransformationMixin(Generic[_T]):
             - :meth:`flat_map`
             - :meth:`switch_map`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.concat_map(project))
+        pass
 
     def switch_map(self, project: typing.Mapper[_T, Observable[_B]]) -> Observable[_B]:
         """Transform and switch to the latest observable.
@@ -339,9 +335,7 @@ class TransformationMixin(Generic[_T]):
             - :meth:`flat_map`
             - :meth:`map_indexed`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.flat_map_indexed(mapper_indexed))
+        pass
 
     def flat_map_latest(
         self, mapper: typing.Mapper[_T, Observable[_B]]
@@ -371,9 +365,7 @@ class TransformationMixin(Generic[_T]):
             - :meth:`flat_map`
             - :meth:`switch_map`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.flat_map_latest(mapper))
+        pass
 
     def switch_map_indexed(
         self, mapper_indexed: typing.MapperIndexed[_T, Observable[_B]]
@@ -529,13 +521,7 @@ class TransformationMixin(Generic[_T]):
             - :meth:`pluck_attr`
             - :meth:`map`
         """
-        from reactivex import operators as ops
-
-        # Cast is safe: pluck expects Observable[dict[str, Any]] but
-        # we have Observable[_T]. The fluent API allows calling this
-        # on sequences of dictionaries.
-        source: Observable[Any] = cast("Observable[Any]", self._as_observable())
-        return ops.pluck(key)(source)
+        pass
 
     def pluck_attr(self, attr: str) -> Observable[Any]:
         """Extract an attribute from each element.
@@ -563,9 +549,7 @@ class TransformationMixin(Generic[_T]):
             - :meth:`pluck`
             - :meth:`map`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.pluck_attr(attr))
+        pass
 
     def expand(self, mapper: typing.Mapper[_T, Observable[_T]]) -> Observable[_T]:
         """Recursively expand observable sequences.
@@ -623,10 +607,4 @@ class TransformationMixin(Generic[_T]):
             - :func:`exclusive <reactivex.operators.exclusive>`
             - :meth:`concat_map`
         """
-        from reactivex import operators as ops
-
-        # Cast is safe: exclusive expects Observable[Observable[T]] but
-        # we have Observable[_T]. The fluent API allows calling this on
-        # sequences of observables.
-        source: Observable[Any] = cast("Observable[Any]", self._as_observable())
-        return cast("Observable[_T]", ops.exclusive()(source))
+        pass

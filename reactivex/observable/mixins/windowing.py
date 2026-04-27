@@ -143,9 +143,7 @@ class WindowingMixin(Generic[_T]):
             - :meth:`filter`
             - :meth:`group_by`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.partition(predicate))
+        pass
 
     def pairwise(self) -> Observable[tuple[_T, _T]]:
         """Emit consecutive pairs of elements.
@@ -208,9 +206,7 @@ class WindowingMixin(Generic[_T]):
             - :meth:`partition`
             - :meth:`filter_indexed`
         """
-        from reactivex import operators as ops
-
-        return ops.partition_indexed(predicate_indexed)(self._as_observable())
+        pass
 
     def buffer_with_count(
         self, count: int, skip: int | None = None
@@ -356,9 +352,7 @@ class WindowingMixin(Generic[_T]):
             - :meth:`buffer`
             - :meth:`buffer_toggle`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.buffer_when(closing_mapper))
+        pass
 
     def buffer_toggle(
         self,
@@ -401,9 +395,7 @@ class WindowingMixin(Generic[_T]):
             - :func:`buffer_toggle <reactivex.operators.buffer_toggle>`
             - :meth:`buffer_when`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.buffer_toggle(openings, closing_mapper))
+        pass
 
     def window(self, boundaries: Observable[Any]) -> Observable[Observable[_T]]:
         """Window elements based on boundary observable.

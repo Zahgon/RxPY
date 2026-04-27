@@ -25,13 +25,7 @@ def sum_(
     Returns:
         An observable sequence containing a single element with the sum.
     """
-    if key_mapper:
-        return source.pipe(ops.map(key_mapper), ops.sum())
-
-    def accumulator(prev: float, cur: float) -> float:
-        return prev + cur
-
-    return source.pipe(ops.reduce(seed=0, accumulator=accumulator))
+    pass
 
 
 __all__ = ["sum_"]

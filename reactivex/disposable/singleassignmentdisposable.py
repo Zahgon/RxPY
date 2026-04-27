@@ -22,7 +22,7 @@ class SingleAssignmentDisposable(DisposableBase):
         super().__init__()
 
     def get_disposable(self) -> DisposableBase | None:
-        return self.current
+        pass
 
     def set_disposable(self, value: DisposableBase) -> None:
         if self.current:

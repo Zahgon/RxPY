@@ -44,42 +44,10 @@ def join_(
             right_id = 0
 
             def on_next_left(value: _T1):
-                nonlocal left_id
-                duration = None
-                current_id = left_id
-                left_id += 1
-                md = SingleAssignmentDisposable()
-
-                left_map[current_id] = value
-                group.add(md)
-
-                def expire():
-                    if current_id in left_map:
-                        del left_map[current_id]
-                    if not len(left_map) and left_done:
-                        observer.on_completed()
-
-                    group.remove(md)
-
-                try:
-                    duration = left_duration_mapper(value)
-                except Exception as exception:
-                    observer.on_error(exception)
-                    return
-
-                md.disposable = duration.pipe(take(1)).subscribe(
-                    noop, observer.on_error, lambda: expire(), scheduler=scheduler
-                )
-
-                for val in right_map.values():
-                    result = (value, val)
-                    observer.on_next(result)
+                pass
 
             def on_completed_left() -> None:
-                nonlocal left_done
-                left_done = True
-                if right_done or not len(left_map):
-                    observer.on_completed()
+                pass
 
             group.add(
                 left.subscribe(
@@ -91,41 +59,10 @@ def join_(
             )
 
             def on_next_right(value: _T2):
-                nonlocal right_id
-                duration = None
-                current_id = right_id
-                right_id += 1
-                md = SingleAssignmentDisposable()
-                right_map[current_id] = value
-                group.add(md)
-
-                def expire():
-                    if current_id in right_map:
-                        del right_map[current_id]
-                    if not len(right_map) and right_done:
-                        observer.on_completed()
-
-                    group.remove(md)
-
-                try:
-                    duration = right_duration_mapper(value)
-                except Exception as exception:
-                    observer.on_error(exception)
-                    return
-
-                md.disposable = duration.pipe(take(1)).subscribe(
-                    noop, observer.on_error, lambda: expire(), scheduler=scheduler
-                )
-
-                for val in left_map.values():
-                    result = (val, value)
-                    observer.on_next(result)
+                pass
 
             def on_completed_right():
-                nonlocal right_done
-                right_done = True
-                if left_done or not len(right_map):
-                    observer.on_completed()
+                pass
 
             group.add(
                 right.subscribe(

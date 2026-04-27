@@ -70,12 +70,7 @@ def share_(source: Observable[_TSource]) -> Observable[_TSource]:
     Returns:
         An observable that shares a single subscription.
     """
-    return source.pipe(
-        compose(
-            ops.publish(),
-            ops.ref_count(),
-        )
-    )
+    pass
 
 
 __all__ = ["publish_", "share_"]

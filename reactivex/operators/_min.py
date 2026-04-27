@@ -12,10 +12,7 @@ _T = TypeVar("_T")
 
 
 def first_only(x: list[_T]) -> _T:
-    if not x:
-        raise SequenceContainsNoElementsError()
-
-    return x[0]
+    pass
 
 
 @curry_flip
@@ -41,10 +38,7 @@ def min_(
         An observable sequence containing a single element
         with the minimum element in the source sequence.
     """
-    return source.pipe(
-        ops.min_by(cast(Callable[[_T], _T], identity), comparer),
-        ops.map(first_only),
-    )
+    pass
 
 
 __all__ = ["min_"]

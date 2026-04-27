@@ -59,9 +59,7 @@ class TestingMixin(Generic[_T]):
             - :func:`all <reactivex.operators.all>`
             - :meth:`some`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.all(predicate))
+        pass
 
     def some(self, predicate: typing.Predicate[_T] | None = None) -> Observable[bool]:
         """Check if some elements satisfy a condition.

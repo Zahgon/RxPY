@@ -36,8 +36,7 @@ class VirtualTimeScheduler(PeriodicScheduler):
         self._queue: PriorityQueue[ScheduledItem] = PriorityQueue()
 
     def _get_clock(self) -> typing.AbsoluteTime:
-        with self._lock:
-            return self._clock
+        pass
 
     clock = property(fget=_get_clock)
 
@@ -164,44 +163,7 @@ class VirtualTimeScheduler(PeriodicScheduler):
         Args:
             time: Absolute time to advance the schedulers clock to.
         """
-        item: ScheduledItem
-        dt: datetime = self.to_datetime(time)
-        with self._lock:
-            if self.now > dt:
-                raise ArgumentOutOfRangeException()
-
-            if self.now == dt or self._is_enabled:
-                return
-
-            self._is_enabled = True
-
-        while True:
-            with self._lock:
-                if not self._is_enabled or not self._queue:
-                    break
-
-                item = self._queue.peek()
-
-                if item.duetime > dt:
-                    break
-
-                if item.duetime > self.now:
-                    if isinstance(self._clock, datetime):
-                        self._clock = item.duetime
-                    else:
-                        self._clock = self.to_seconds(item.duetime)
-
-                self._queue.dequeue()
-
-            if not item.is_cancelled():
-                item.invoke()
-
-        with self._lock:
-            self._is_enabled = False
-            if isinstance(self._clock, datetime):
-                self._clock = dt
-            else:
-                self._clock = self.to_seconds(dt)
+        pass
 
     def advance_by(self, time: typing.RelativeTime) -> None:
         """Advances the schedulers clock by the specified relative time,
@@ -210,10 +172,7 @@ class VirtualTimeScheduler(PeriodicScheduler):
         Args:
             time: Relative time to advance the schedulers clock by.
         """
-
-        log.debug("VirtualTimeScheduler.advance_by(time=%s)", time)
-
-        self.advance_to(self.add(self.now, self.to_timedelta(time)))
+        pass
 
     def sleep(self, time: typing.RelativeTime) -> None:
         """Advances the schedulers clock by the specified relative time.

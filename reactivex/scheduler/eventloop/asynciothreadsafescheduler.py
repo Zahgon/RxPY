@@ -50,8 +50,7 @@ class AsyncIOThreadSafeScheduler(AsyncIOScheduler):
             future: Future[int] = Future()
 
             def cancel_handle() -> None:
-                handle.cancel()
-                future.set_result(0)
+                pass
 
             self._loop.call_soon_threadsafe(cancel_handle)
             future.result()
@@ -89,7 +88,7 @@ class AsyncIOThreadSafeScheduler(AsyncIOScheduler):
         handle: list[asyncio.Handle] = []
 
         def stage2() -> None:
-            handle.append(self._loop.call_later(seconds, interval))
+            pass
 
         handle.append(self._loop.call_soon_threadsafe(stage2))
 
@@ -108,8 +107,7 @@ class AsyncIOThreadSafeScheduler(AsyncIOScheduler):
             future: Future[int] = Future()
 
             def cancel_handle() -> None:
-                do_cancel_handles()
-                future.set_result(0)
+                pass
 
             self._loop.call_soon_threadsafe(cancel_handle)
             future.result()

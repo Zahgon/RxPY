@@ -13,36 +13,7 @@ def single_or_default_async_(
     has_default: bool = False, default_value: _T | None = None
 ) -> Callable[[Observable[_T]], Observable[_T]]:
     def single_or_default_async(source: Observable[_T]) -> Observable[_T]:
-        def subscribe(
-            observer: abc.ObserverBase[_T],
-            scheduler: abc.SchedulerBase | None = None,
-        ) -> abc.DisposableBase:
-            value = cast(_T, default_value)
-            seen_value = False
-
-            def on_next(x: _T):
-                nonlocal value, seen_value
-
-                if seen_value:
-                    observer.on_error(
-                        Exception("Sequence contains more than one element")
-                    )
-                else:
-                    value = x
-                    seen_value = True
-
-            def on_completed():
-                if not seen_value and not has_default:
-                    observer.on_error(SequenceContainsNoElementsError())
-                else:
-                    observer.on_next(value)
-                    observer.on_completed()
-
-            return source.subscribe(
-                on_next, observer.on_error, on_completed, scheduler=scheduler
-            )
-
-        return Observable(subscribe)
+        pass
 
     return single_or_default_async
 

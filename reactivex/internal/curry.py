@@ -45,15 +45,7 @@ def curry_flip(
         >>> # Or called directly:
         >>> result = take(5)(source)
     """
-
-    @functools.wraps(fun)
-    def _wrap_args(*args: _P.args, **kwargs: _P.kwargs) -> Callable[[_A], _B]:
-        def _wrap_curried(curry_arg: _A) -> _B:
-            return fun(curry_arg, *args, **kwargs)
-
-        return _wrap_curried
-
-    return _wrap_args
+    pass
 
 
 __all__ = ["curry_flip"]

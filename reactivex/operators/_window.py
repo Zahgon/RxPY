@@ -77,7 +77,7 @@ def window_(
         observer.on_next(add_ref(window_subject, r))
 
         def on_next_window(x: _T) -> None:
-            window_subject.on_next(x)
+            pass
 
         def on_error(err: Exception) -> None:
             window_subject.on_error(err)
@@ -94,10 +94,7 @@ def window_(
         )
 
         def on_next_observer(w: Observable[_T]):
-            nonlocal window_subject
-            window_subject.on_completed()
-            window_subject = Subject()
-            observer.on_next(add_ref(window_subject, r))
+            pass
 
         d.add(
             boundaries.subscribe(

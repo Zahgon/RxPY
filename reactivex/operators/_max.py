@@ -35,10 +35,7 @@ def max_(
         An observable sequence containing a single element with the
         maximum element in the source sequence.
     """
-    return source.pipe(
-        ops.max_by(cast(Callable[[_T], _T], identity), comparer),
-        ops.map(first_only),
-    )
+    pass
 
 
 __all__ = ["max_"]

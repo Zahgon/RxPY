@@ -13,26 +13,7 @@ def first_or_default_async_(
     has_default: bool = False, default_value: _T | None = None
 ) -> Callable[[Observable[_T]], Observable[_T]]:
     def first_or_default_async(source: Observable[_T]) -> Observable[_T]:
-        def subscribe(
-            observer: abc.ObserverBase[_T],
-            scheduler: abc.SchedulerBase | None = None,
-        ):
-            def on_next(x: _T):
-                observer.on_next(x)
-                observer.on_completed()
-
-            def on_completed():
-                if not has_default:
-                    observer.on_error(SequenceContainsNoElementsError())
-                else:
-                    observer.on_next(cast(_T, default_value))
-                    observer.on_completed()
-
-            return source.subscribe(
-                on_next, observer.on_error, on_completed, scheduler=scheduler
-            )
-
-        return Observable(subscribe)
+        pass
 
     return first_or_default_async
 

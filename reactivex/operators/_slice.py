@@ -51,30 +51,7 @@ def slice_(
     Returns:
         A sliced observable sequence.
     """
-    _start: int = 0 if start is None else start
-    _stop: int = maxsize if stop is None else stop
-    _step: int = 1 if step is None else step
-
-    pipeline: list[Any] = []
-
-    if _stop >= 0:
-        pipeline.append(ops.take(_stop))
-
-    if _start > 0:
-        pipeline.append(ops.skip(_start))
-    elif _start < 0:
-        pipeline.append(ops.take_last(-_start))
-
-    if _stop < 0:
-        pipeline.append(ops.skip_last(-_stop))
-
-    if _step > 1:
-        pipeline.append(ops.filter_indexed(lambda x, i: i % _step == 0))
-    elif _step < 0:
-        # Reversing events is not supported
-        raise TypeError("Negative step not supported.")
-
-    return source.pipe(*pipeline)
+    pass
 
 
 __all__ = ["slice_"]

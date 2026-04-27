@@ -43,23 +43,7 @@ def return_value_(
 def from_callable_(
     supplier: Callable[[], _T], scheduler: abc.SchedulerBase | None = None
 ) -> Observable[_T]:
-    def subscribe(
-        observer: abc.ObserverBase[_T], scheduler_: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        _scheduler = scheduler or scheduler_ or CurrentThreadScheduler.singleton()
-
-        def action(_: abc.SchedulerBase, __: Any = None) -> None:
-            nonlocal observer
-
-            try:
-                observer.on_next(supplier())
-                observer.on_completed()
-            except Exception as e:  # pylint: disable=broad-except
-                observer.on_error(e)
-
-        return _scheduler.schedule(action)
-
-    return Observable(subscribe)
+    pass
 
 
 __all__ = ["return_value_", "from_callable_"]

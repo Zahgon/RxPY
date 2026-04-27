@@ -39,63 +39,7 @@ def hot(
     error: Exception | None = None,
     scheduler: abc.SchedulerBase | None = None,
 ) -> Observable[Any]:
-    _scheduler = scheduler or new_thread_scheduler
-
-    if isinstance(duetime, datetime):
-        duetime = duetime - _scheduler.now
-
-    messages = parse(
-        string,
-        timespan=timespan,
-        time_shift=duetime,
-        lookup=lookup,
-        error=error,
-        raise_stopped=True,
-    )
-
-    lock = threading.RLock()
-    is_stopped = False
-    observers: list[abc.ObserverBase[Any]] = []
-
-    def subscribe(
-        observer: abc.ObserverBase[Any], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        # should a hot observable already completed or on error
-        # re-push on_completed/on_error at subscription time?
-        if not is_stopped:
-            with lock:
-                observers.append(observer)
-
-        def dispose() -> None:
-            with lock:
-                try:
-                    observers.remove(observer)
-                except ValueError:
-                    pass
-
-        return Disposable(dispose)
-
-    def create_action(notification: Notification[Any]) -> typing.ScheduledAction[Any]:
-        def action(scheduler: abc.SchedulerBase, state: Any = None) -> None:
-            nonlocal is_stopped
-
-            with lock:
-                for observer in observers:
-                    notification.accept(observer)
-
-                if notification.kind in ("C", "E"):
-                    is_stopped = True
-
-        return action
-
-    for message in messages:
-        timespan, notification = message
-        action = create_action(notification)
-
-        # Don't make closures within a loop
-        _scheduler.schedule_relative(timespan, action)
-
-    return Observable(subscribe)
+    pass
 
 
 def from_marbles(
@@ -105,33 +49,7 @@ def from_marbles(
     error: Exception | None = None,
     scheduler: abc.SchedulerBase | None = None,
 ) -> Observable[Any]:
-    messages = parse(
-        string, timespan=timespan, lookup=lookup, error=error, raise_stopped=True
-    )
-
-    def subscribe(
-        observer: abc.ObserverBase[Any], scheduler_: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        _scheduler = scheduler or scheduler_ or new_thread_scheduler
-        disp = CompositeDisposable()
-
-        def schedule_msg(
-            message: tuple[typing.RelativeTime, Notification[Any]],
-        ) -> None:
-            duetime, notification = message
-
-            def action(scheduler: abc.SchedulerBase, state: Any = None) -> None:
-                notification.accept(observer)
-
-            disp.add(_scheduler.schedule_relative(duetime, action))
-
-        for message in messages:
-            # Don't make closures within a loop
-            schedule_msg(message)
-
-        return disp
-
-    return Observable(subscribe)
+    pass
 
 
 def parse(
@@ -198,77 +116,4 @@ def parse(
         A list of messages defined as a tuple of (timespan, notification).
 
     """
-
-    error_ = error or Exception("error")
-    lookup_ = lookup or {}
-
-    if isinstance(timespan, timedelta):
-        timespan = timespan.total_seconds()
-    if isinstance(time_shift, timedelta):
-        time_shift = time_shift.total_seconds()
-
-    string = string.replace(" ", "")
-
-    # try to cast a string to an int, then to a float
-    def try_number(element: str) -> float | str:
-        try:
-            return int(element)
-        except ValueError:
-            try:
-                return float(element)
-            except ValueError:
-                return element
-
-    def map_element(
-        time: typing.RelativeTime, element: str
-    ) -> tuple[typing.RelativeTime, Notification[Any]]:
-        if element == "|":
-            return (time, notification.OnCompleted())
-        elif element == "#":
-            return (time, notification.OnError(error_))
-        else:
-            value = try_number(element)
-            value = lookup_.get(value, value)
-            return (time, notification.OnNext(value))
-
-    is_stopped = False
-
-    def check_stopped(element: str) -> None:
-        nonlocal is_stopped
-        if raise_stopped:
-            if is_stopped:
-                raise ValueError("Elements cannot be declared after a # or | symbol.")
-
-            if element in ("#", "|"):
-                is_stopped = True
-
-    iframe = 0
-    messages: list[tuple[typing.RelativeTime, Notification[Any]]] = []
-
-    for results in tokens.findall(string):
-        timestamp = iframe * timespan + time_shift
-        group, ticks, comma_error, element = results
-
-        if group:
-            elements = group[1:-1].split(",")
-            for elm in elements:
-                check_stopped(elm)
-            grp_messages = [
-                map_element(timestamp, elm) for elm in elements if elm != ""
-            ]
-            messages.extend(grp_messages)
-            iframe += len(group)
-
-        if ticks:
-            iframe += len(ticks)
-
-        if comma_error:
-            raise ValueError("Comma is only allowed in group of elements.")
-
-        if element:
-            check_stopped(element)
-            message = map_element(timestamp, element)
-            messages.append(message)
-            iframe += len(element)
-
-    return messages
+    pass

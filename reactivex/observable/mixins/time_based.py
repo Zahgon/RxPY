@@ -204,6 +204,4 @@ class TimeBasedMixin(Generic[_T]):
             - :meth:`debounce`
             - :meth:`throttle_first`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.throttle_with_timeout(duetime, scheduler))
+        pass

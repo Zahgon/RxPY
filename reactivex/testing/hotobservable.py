@@ -52,10 +52,6 @@ class HotObservable(Observable[_T]):
         index = len(self.subscriptions) - 1
 
         def dispose_action() -> None:
-            if observer:
-                self.observers.remove(observer)
-            start = self.subscriptions[index].subscribe
-            end = self.scheduler.clock
-            self.subscriptions[index] = Subscription(start, end)
+            pass
 
         return Disposable(dispose_action)

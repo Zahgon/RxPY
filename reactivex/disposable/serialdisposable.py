@@ -17,7 +17,7 @@ class SerialDisposable(abc.DisposableBase):
         super().__init__()
 
     def get_disposable(self) -> abc.DisposableBase | None:
-        return self.current
+        pass
 
     def set_disposable(self, value: abc.DisposableBase) -> None:
         """If the SerialDisposable has already been disposed, assignment

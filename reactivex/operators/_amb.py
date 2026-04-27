@@ -53,22 +53,13 @@ def amb_(
                 left_subscription.dispose()
 
         def on_next_left(value: _T) -> None:
-            with left_source.lock:
-                choice_left()
-            if choice[0] == left_choice:
-                observer.on_next(value)
+            pass
 
         def on_error_left(err: Exception) -> None:
-            with left_source.lock:
-                choice_left()
-            if choice[0] == left_choice:
-                observer.on_error(err)
+            pass
 
         def on_completed_left() -> None:
-            with left_source.lock:
-                choice_left()
-            if choice[0] == left_choice:
-                observer.on_completed()
+            pass
 
         left_d = left_source.subscribe(
             on_next_left, on_error_left, on_completed_left, scheduler=scheduler
@@ -76,22 +67,13 @@ def amb_(
         left_subscription.disposable = left_d
 
         def send_right(value: _T) -> None:
-            with left_source.lock:
-                choice_right()
-            if choice[0] == right_choice:
-                observer.on_next(value)
+            pass
 
         def on_error_right(err: Exception) -> None:
-            with left_source.lock:
-                choice_right()
-            if choice[0] == right_choice:
-                observer.on_error(err)
+            pass
 
         def on_completed_right() -> None:
-            with left_source.lock:
-                choice_right()
-            if choice[0] == right_choice:
-                observer.on_completed()
+            pass
 
         right_d = obs.subscribe(
             send_right, on_error_right, on_completed_right, scheduler=scheduler

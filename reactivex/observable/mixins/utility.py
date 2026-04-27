@@ -344,9 +344,7 @@ class UtilityMixin(Generic[_T]):
             - :func:`delay_subscription <reactivex.operators.delay_subscription>`
             - :meth:`delay`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.delay_subscription(duetime, scheduler))
+        pass
 
     def do(
         self,
@@ -377,7 +375,7 @@ class UtilityMixin(Generic[_T]):
         See Also:
             - :meth:`do_action`
         """
-        return self.do_action(on_next, on_error, on_completed)
+        pass
 
     def do_while(self, condition: typing.Predicate[Observable[_T]]) -> Observable[_T]:
         """Repeat source as long as condition holds.
@@ -488,9 +486,7 @@ class UtilityMixin(Generic[_T]):
         See Also:
             - :func:`ignore_elements <reactivex.operators.ignore_elements>`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.ignore_elements())
+        pass
 
     def repeat(self, repeat_count: int | None = None) -> Observable[_T]:
         """Repeat the sequence.
@@ -654,9 +650,7 @@ class UtilityMixin(Generic[_T]):
         See Also:
             - :func:`to_future <reactivex.operators.to_future>`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.to_future(future_ctor))
+        pass
 
     def to_marbles(
         self,
@@ -687,9 +681,7 @@ class UtilityMixin(Generic[_T]):
         See Also:
             - :func:`to_marbles <reactivex.operators.to_marbles>`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.to_marbles(timespan, scheduler))
+        pass
 
     def delay_with_mapper(
         self,

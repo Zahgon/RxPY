@@ -8,9 +8,7 @@ class Subscription:
         self.unsubscribe = end or sys.maxsize
 
     def equals(self, other: Any) -> bool:
-        return (
-            self.subscribe == other.subscribe and self.unsubscribe == other.unsubscribe
-        )
+        pass
 
     def __eq__(self, other: Any) -> bool:
         return self.equals(other)

@@ -35,7 +35,7 @@ def count_(
         )
 
     def reducer(n: int, _: _T) -> int:
-        return n + 1
+        pass
 
     return source.pipe(ops.reduce(reducer, seed=0))
 

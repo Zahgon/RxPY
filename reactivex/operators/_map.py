@@ -31,24 +31,7 @@ def map_(
         result of invoking the transform function on each element
         of the source.
     """
-    _mapper = mapper or cast(Mapper[_T1, _T2], identity)
-
-    def subscribe(
-        obv: abc.ObserverBase[_T2], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        def on_next(value: _T1) -> None:
-            try:
-                result = _mapper(value)
-            except Exception as err:  # pylint: disable=broad-except
-                obv.on_error(err)
-            else:
-                obv.on_next(result)
-
-        return source.subscribe(
-            on_next, obv.on_error, obv.on_completed, scheduler=scheduler
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 @curry_flip
@@ -73,7 +56,7 @@ def map_indexed_(
     """
 
     def _identity(value: _T1, _: int) -> _T2:
-        return cast(_T2, value)
+        pass
 
     _mapper_indexed = mapper_indexed or cast(typing.MapperIndexed[_T1, _T2], _identity)
 

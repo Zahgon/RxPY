@@ -95,9 +95,7 @@ class ErrorHandlingMixin(Generic[_T]):
             - :func:`retry <reactivex.operators.retry>`
             - :meth:`catch`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.retry(retry_count))
+        pass
 
     def on_error_resume_next(self, second: Observable[_T]) -> Observable[_T]:
         """Continue with another observable on error or completion.

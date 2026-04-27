@@ -25,7 +25,7 @@ class ScheduledDisposable(abc.DisposableBase):
 
     @property
     def is_disposed(self) -> bool:
-        return self.disposable.is_disposed
+        pass
 
     def dispose(self) -> None:
         """Disposes the wrapped disposable on the provided scheduler."""

@@ -100,14 +100,7 @@ class MathematicalMixin(Generic[_T]):
             - :meth:`average`
             - :meth:`reduce`
         """
-        from reactivex import operators as ops
-
-        if key_mapper is None:
-            # Call operator directly with cast when no key_mapper is provided.
-            # sum() expects Observable[float] but we have Observable[_T].
-            source: Observable[float] = cast("Observable[float]", self._as_observable())
-            return ops.sum()(source)
-        return self._as_observable().pipe(ops.sum(key_mapper))
+        pass
 
     def average(
         self, key_mapper: typing.Mapper[Any, float] | None = None
@@ -169,9 +162,7 @@ class MathematicalMixin(Generic[_T]):
             - :meth:`max`
             - :meth:`min_by`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.min(comparer))
+        pass
 
     def max(self, comparer: typing.Comparer[_T] | None = None) -> Observable[_T]:
         """Find the maximum element.
@@ -200,9 +191,7 @@ class MathematicalMixin(Generic[_T]):
             - :meth:`min`
             - :meth:`max_by`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.max(comparer))
+        pass
 
     def min_by(
         self,

@@ -127,9 +127,7 @@ class CombinationMixin(Generic[_T]):
             - :meth:`combine_latest`
             - :meth:`with_latest_from`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.zip(*sources))
+        pass
 
     def combine_latest(self, *sources: Observable[Any]) -> Observable[Any]:
         """Combine latest values from observables.

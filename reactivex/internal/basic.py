@@ -10,7 +10,7 @@ def noop(*args: Any, **kw: Any) -> None:
 
 def identity(x: _T) -> _T:
     """Returns argument x"""
-    return x
+    pass
 
 
 def default_now() -> datetime:
@@ -18,19 +18,16 @@ def default_now() -> datetime:
 
 
 def default_comparer(x: _T, y: _T) -> bool:
-    return x == y
+    pass
 
 
 def default_sub_comparer(x: Any, y: Any) -> Any:
-    return x - y
+    pass
 
 
 def default_key_serializer(x: Any) -> str:
-    return str(x)
+    pass
 
 
 def default_error(err: Exception | str) -> NoReturn:
-    if isinstance(err, BaseException):
-        raise err
-
-    raise Exception(err)
+    pass

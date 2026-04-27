@@ -72,10 +72,4 @@ class RefCountDisposable(DisposableBase):
     def disposable(self) -> DisposableBase:
         """Returns a dependent disposable that when disposed decreases the
         refcount on the underlying disposable."""
-
-        with self.lock:
-            if self.is_disposed:
-                return Disposable()
-
-            self.count += 1
-            return self.InnerDisposable(self)
+        pass

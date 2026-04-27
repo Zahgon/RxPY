@@ -23,25 +23,7 @@ def filter_(source: Observable[_T], predicate: Predicate[_T]) -> Observable[_T]:
     Returns:
         A filtered observable sequence.
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[_T], scheduler: abc.SchedulerBase | None
-    ) -> abc.DisposableBase:
-        def on_next(value: _T):
-            try:
-                should_run = predicate(value)
-            except Exception as ex:  # pylint: disable=broad-except
-                observer.on_error(ex)
-                return
-
-            if should_run:
-                observer.on_next(value)
-
-        return source.subscribe(
-            on_next, observer.on_error, observer.on_completed, scheduler=scheduler
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 @curry_flip

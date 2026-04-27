@@ -21,11 +21,7 @@ def pluck_(
 
     To pluck an attribute of each element, use pluck_attr.
     """
-
-    def mapper(x: dict[_TKey, _TValue]) -> _TValue:
-        return x[key]
-
-    return ops.map(mapper)
+    pass
 
 
 def pluck_attr_(prop: str) -> Callable[[Observable[Any]], Observable[Any]]:
@@ -40,8 +36,7 @@ def pluck_attr_(prop: str) -> Callable[[Observable[Any]], Observable[Any]]:
     To pluck values using dict-like access (as in element[key]) on each
     element, use pluck.
     """
-
-    return ops.map(lambda x: getattr(x, prop))
+    pass
 
 
 __all__ = ["pluck_", "pluck_attr_"]

@@ -130,6 +130,4 @@ class ConditionalMixin(Generic[_T]):
             - :func:`find_index <reactivex.operators.find_index>`
             - :meth:`find`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.find_index(predicate))
+        pass

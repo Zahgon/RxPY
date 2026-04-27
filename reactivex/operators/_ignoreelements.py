@@ -22,16 +22,7 @@ def ignore_elements_(source: Observable[_T]) -> Observable[_T]:
         An empty observable sequence that signals
         termination, successful or exceptional, of the source sequence.
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[_T],
-        scheduler: abc.SchedulerBase | None = None,
-    ) -> abc.DisposableBase:
-        return source.subscribe(
-            noop, observer.on_error, observer.on_completed, scheduler=scheduler
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 __all__ = ["ignore_elements_"]

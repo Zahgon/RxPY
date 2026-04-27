@@ -19,13 +19,7 @@ def sample_observable(
         value: _T = cast(_T, None)
 
         def sample_subscribe(_: Any = None) -> None:
-            nonlocal has_value
-            if has_value:
-                has_value = False
-                observer.on_next(value)
-
-            if at_end:
-                observer.on_completed()
+            pass
 
         def on_next(new_value: _T):
             nonlocal has_value, value

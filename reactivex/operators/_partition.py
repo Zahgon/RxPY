@@ -36,18 +36,7 @@ def partition_(
         predicate returns True, and the second triggers when the
         predicate returns False.
     """
-
-    def not_predicate(x: _T) -> bool:
-        return not predicate(x)
-
-    published = source.pipe(
-        ops.publish(),
-        ops.ref_count(),
-    )
-    return [
-        published.pipe(ops.filter(predicate)),
-        published.pipe(ops.filter(not_predicate)),
-    ]
+    pass
 
 
 @curry_flip
@@ -78,18 +67,7 @@ def partition_indexed_(
         predicate returns True, and the second triggers when the
         predicate returns False.
     """
-
-    def not_predicate_indexed(x: _T, i: int) -> bool:
-        return not predicate_indexed(x, i)
-
-    published = source.pipe(
-        ops.publish(),
-        ops.ref_count(),
-    )
-    return [
-        published.pipe(ops.filter_indexed(predicate_indexed)),
-        published.pipe(ops.filter_indexed(not_predicate_indexed)),
-    ]
+    pass
 
 
 __all__ = ["partition_", "partition_indexed_"]

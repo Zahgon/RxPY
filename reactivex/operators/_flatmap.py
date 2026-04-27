@@ -17,20 +17,7 @@ def _flat_map_internal(
     mapper_indexed: MapperIndexed[_T1, Any] | None = None,
 ) -> Observable[Any]:
     def projection(x: _T1, i: int) -> Observable[Any]:
-        mapper_result: Any = (
-            mapper(x)
-            if mapper
-            else mapper_indexed(x, i)
-            if mapper_indexed
-            else identity
-        )
-        if isinstance(mapper_result, Future):
-            result: Observable[Any] = from_future(cast("Future[Any]", mapper_result))
-        elif isinstance(mapper_result, Observable):
-            result = cast(Observable[Any], mapper_result)
-        else:
-            result = from_(mapper_result)
-        return result
+        pass
 
     return source.pipe(
         ops.map_indexed(projection),
@@ -91,12 +78,7 @@ def flat_map_indexed_(
         the one-to-many transform function on each element of the input
         sequence.
     """
-
-    if callable(mapper_indexed):
-        ret = _flat_map_internal(source, mapper_indexed=mapper_indexed)
-    else:
-        ret = _flat_map_internal(source, mapper=lambda _: mapper_indexed)
-    return ret
+    pass
 
 
 @curry_flip
@@ -125,11 +107,7 @@ def flat_map_latest_(
         any point in time produces the elements of the most recent
         inner observable sequence that has been received.
     """
-
-    return source.pipe(
-        ops.map(mapper),
-        ops.switch_latest(),
-    )
+    pass
 
 
 __all__ = ["flat_map_", "flat_map_latest_", "flat_map_indexed_"]

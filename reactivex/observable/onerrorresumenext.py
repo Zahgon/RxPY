@@ -59,7 +59,7 @@ def on_error_resume_next_(
             subscription.disposable = d
 
             def on_resume(state: Exception | None = None) -> None:
-                scheduler.schedule(action, state)
+                pass
 
             d.disposable = current.subscribe(
                 observer.on_next, on_resume, on_resume, scheduler=scheduler

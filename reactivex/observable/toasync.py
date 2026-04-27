@@ -34,20 +34,7 @@ def to_async_(
     _scheduler = scheduler or TimeoutScheduler.singleton()
 
     def wrapper(*args: Any) -> Observable[_T]:
-        subject: AsyncSubject[_T] = AsyncSubject()
-
-        def action(scheduler: abc.SchedulerBase, state: Any = None) -> None:
-            try:
-                result = func(*args)
-            except Exception as ex:  # pylint: disable=broad-except
-                subject.on_error(ex)
-                return
-
-            subject.on_next(result)
-            subject.on_completed()
-
-        _scheduler.schedule(action)
-        return subject.pipe(ops.as_observable())
+        pass
 
     return wrapper
 

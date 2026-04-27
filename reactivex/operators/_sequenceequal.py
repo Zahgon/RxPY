@@ -52,62 +52,16 @@ def sequence_equal_(
             qr: list[_T] = []
 
             def on_next1(x: _T) -> None:
-                if len(qr) > 0:
-                    v = qr.pop(0)
-                    try:
-                        equal = comparer_(v, x)
-                    except Exception as e:
-                        observer.on_error(e)
-                        return
-
-                    if not equal:
-                        observer.on_next(False)
-                        observer.on_completed()
-
-                elif doner[0]:
-                    observer.on_next(False)
-                    observer.on_completed()
-                else:
-                    ql.append(x)
+                pass
 
             def on_completed1() -> None:
-                donel[0] = True
-                if not ql:
-                    if qr:
-                        observer.on_next(False)
-                        observer.on_completed()
-                    elif doner[0]:
-                        observer.on_next(True)
-                        observer.on_completed()
+                pass
 
             def on_next2(x: _T):
-                if len(ql) > 0:
-                    v = ql.pop(0)
-                    try:
-                        equal = comparer_(v, x)
-                    except Exception as exception:
-                        observer.on_error(exception)
-                        return
-
-                    if not equal:
-                        observer.on_next(False)
-                        observer.on_completed()
-
-                elif donel[0]:
-                    observer.on_next(False)
-                    observer.on_completed()
-                else:
-                    qr.append(x)
+                pass
 
             def on_completed2():
-                doner[0] = True
-                if not qr:
-                    if len(ql) > 0:
-                        observer.on_next(False)
-                        observer.on_completed()
-                    elif donel[0]:
-                        observer.on_next(True)
-                        observer.on_completed()
+                pass
 
             subscription1 = first.subscribe(
                 on_next1, observer.on_error, on_completed1, scheduler=scheduler

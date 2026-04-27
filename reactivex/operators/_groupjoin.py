@@ -42,7 +42,7 @@ def group_join_(
     """
 
     def nothing(_: Any) -> None:
-        return None
+        pass
 
     def group_join(
         left: Observable[_TLeft],
@@ -59,62 +59,10 @@ def group_join_(
             right_id = [0]
 
             def on_next_left(value: _TLeft) -> None:
-                subject: Subject[_TRight] = Subject()
-
-                with left.lock:
-                    _id = left_id[0]
-                    left_id[0] += 1
-                    left_map[_id] = subject
-
-                try:
-                    result = (value, add_ref(subject, rcd))
-                except Exception as e:
-                    log.error(f"*** Exception: {e}")
-                    for left_value in left_map.values():
-                        left_value.on_error(e)
-
-                    observer.on_error(e)
-                    return
-
-                observer.on_next(result)
-
-                for right_value in right_map.values():
-                    subject.on_next(right_value)
-
-                md = SingleAssignmentDisposable()
-                group.add(md)
-
-                def expire():
-                    if _id in left_map:
-                        del left_map[_id]
-                        subject.on_completed()
-
-                    group.remove(md)
-
-                try:
-                    duration = left_duration_mapper(value)
-                except Exception as e:
-                    for left_value in left_map.values():
-                        left_value.on_error(e)
-
-                    observer.on_error(e)
-                    return
-
-                def on_error(error: Exception) -> Any:
-                    for left_value in left_map.values():
-                        left_value.on_error(error)
-
-                    observer.on_error(error)
-
-                md.disposable = duration.pipe(ops.take(1)).subscribe(
-                    nothing, on_error, expire, scheduler=scheduler
-                )
+                pass
 
             def on_error_left(error: Exception) -> None:
-                for left_value in left_map.values():
-                    left_value.on_error(error)
-
-                observer.on_error(error)
+                pass
 
             group.add(
                 left.subscribe(
@@ -126,47 +74,10 @@ def group_join_(
             )
 
             def send_right(value: _TRight) -> None:
-                with left.lock:
-                    _id = right_id[0]
-                    right_id[0] += 1
-                    right_map[_id] = value
-
-                md = SingleAssignmentDisposable()
-                group.add(md)
-
-                def expire():
-                    del right_map[_id]
-                    group.remove(md)
-
-                try:
-                    duration = right_duration_mapper(value)
-                except Exception as e:
-                    for left_value in left_map.values():
-                        left_value.on_error(e)
-
-                    observer.on_error(e)
-                    return
-
-                def on_error(error: Exception):
-                    with left.lock:
-                        for left_value in left_map.values():
-                            left_value.on_error(error)
-
-                        observer.on_error(error)
-
-                md.disposable = duration.pipe(ops.take(1)).subscribe(
-                    nothing, on_error, expire, scheduler=scheduler
-                )
-
-                with left.lock:
-                    for left_value in left_map.values():
-                        left_value.on_next(value)
+                pass
 
             def on_error_right(error: Exception) -> None:
-                for left_value in left_map.values():
-                    left_value.on_error(error)
-
-                observer.on_error(error)
+                pass
 
             group.add(right.subscribe(send_right, on_error_right, scheduler=scheduler))
             return rcd

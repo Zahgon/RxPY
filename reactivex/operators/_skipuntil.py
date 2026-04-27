@@ -59,11 +59,10 @@ def skip_until_(
         subscriptions.add(right_subscription)
 
         def on_next2(x: Any) -> None:
-            is_open[0] = True
-            right_subscription.dispose()
+            pass
 
         def on_completed2():
-            right_subscription.dispose()
+            pass
 
         right_subscription.disposable = obs.subscribe(
             on_next2, observer.on_error, on_completed2, scheduler=scheduler

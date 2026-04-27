@@ -31,7 +31,7 @@ def zip_(
         An observable sequence containing the result of combining
         elements of the sources as a tuple.
     """
-    return reactivex.zip(source, *args)
+    pass
 
 
 @curry_flip

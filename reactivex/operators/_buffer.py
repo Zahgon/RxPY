@@ -50,10 +50,7 @@ def buffer_when_(
     Returns:
         Observable of lists of buffered elements.
     """
-    return source.pipe(
-        ops.window_when(closing_mapper),
-        ops.flat_map(ops.to_list()),
-    )
+    pass
 
 
 @curry_flip
@@ -76,10 +73,7 @@ def buffer_toggle_(
     Returns:
         Observable of lists of buffered elements.
     """
-    return source.pipe(
-        ops.window_toggle(openings, closing_mapper),
-        ops.flat_map(ops.to_list()),
-    )
+    pass
 
 
 @curry_flip

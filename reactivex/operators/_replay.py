@@ -48,17 +48,7 @@ def replay_(
     sequence produced by multicasting the source sequence within a
     mapper function.
     """
-
-    if mapper:
-
-        def subject_factory(
-            scheduler: abc.SchedulerBase | None = None,
-        ) -> ReplaySubject[_TSource]:
-            return ReplaySubject(buffer_size, window, scheduler)
-
-        return ops.multicast(subject_factory=subject_factory, mapper=mapper)
-    rs: ReplaySubject[_TSource] = ReplaySubject(buffer_size, window, scheduler)
-    return ops.multicast(subject=rs)
+    pass
 
 
 __all__ = ["replay_"]

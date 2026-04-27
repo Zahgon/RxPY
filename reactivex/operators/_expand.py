@@ -81,12 +81,7 @@ def expand_(
                     ensure_active()
 
                 def on_complete() -> None:
-                    nonlocal active_count
-
-                    d.remove(sad)
-                    active_count -= 1
-                    if active_count == 0:
-                        observer.on_completed()
+                    pass
 
                 sad.disposable = work.subscribe(
                     on_next, observer.on_error, on_complete, scheduler=scheduler

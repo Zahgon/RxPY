@@ -111,4 +111,4 @@ class Observer(abc.ObserverBase[_T_in], abc.DisposableBase):
         Returns an observer that hides the identity of the specified
         observer.
         """
-        return Observer(self.on_next, self.on_error, self.on_completed)
+        pass

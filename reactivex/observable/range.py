@@ -32,39 +32,7 @@ def range_(
         An observable sequence that contains a range of sequential
         integral numbers.
     """
-
-    _stop: int = maxsize if stop is None else stop
-    _step: int = 1 if step is None else step
-
-    if step is None and stop is None:
-        range_t = range(start)
-    elif step is None:
-        range_t = range(start, _stop)
-    else:
-        range_t = range(start, _stop, _step)
-
-    def subscribe(
-        observer: abc.ObserverBase[int], scheduler_: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        nonlocal range_t
-
-        _scheduler = scheduler or scheduler_ or CurrentThreadScheduler.singleton()
-        sd = MultipleAssignmentDisposable()
-
-        def action(
-            scheduler: abc.SchedulerBase, iterator: Iterator[int] | None
-        ) -> None:
-            try:
-                assert iterator
-                observer.on_next(next(iterator))
-                sd.disposable = _scheduler.schedule(action, state=iterator)
-            except StopIteration:
-                observer.on_completed()
-
-        sd.disposable = _scheduler.schedule(action, iter(range_t))
-        return sd
-
-    return Observable(subscribe)
+    pass
 
 
 __all__ = ["range_"]

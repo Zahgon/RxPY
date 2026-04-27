@@ -46,18 +46,7 @@ class GtkScheduler(PeriodicScheduler):
         stopped = False
 
         def timer_handler(_: Any) -> bool:
-            if stopped:
-                return False
-
-            nonlocal state
-            if periodic:
-                state = cast(typing.ScheduledPeriodicAction[_TState], action)(state)
-            else:
-                sad.disposable = self.invoke_action(
-                    cast(typing.ScheduledAction[_TState], action), state=state
-                )
-
-            return periodic
+            pass
 
         self._glib.timeout_add(msecs, timer_handler, None)
 

@@ -100,4 +100,4 @@ class CompositeDisposable(abc.DisposableBase):
 
     @property
     def length(self) -> int:
-        return len(self.disposable)
+        pass

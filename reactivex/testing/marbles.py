@@ -74,101 +74,7 @@ def marbles_testing(
     first character will be skipped by the test scheduler.
     E.g. hot("a--b--") will only emit b.
     """
-
-    scheduler = TestScheduler()
-    created = 100.0
-    disposed = 1000.0
-    subscribed = 200.0
-    start_called = False
-    outside_of_context = False
-
-    def check() -> None:
-        if outside_of_context:
-            warn(
-                "context functions should not be called outside of with statement.",
-                UserWarning,
-                stacklevel=3,
-            )
-
-        if start_called:
-            warn(
-                "start() should only be called one time inside a with statement.",
-                UserWarning,
-                stacklevel=3,
-            )
-
-    def test_start(
-        create: Observable[Any] | Callable[[], Observable[Any]],
-    ) -> list[Recorded[Any]]:
-        nonlocal start_called
-        check()
-
-        if isinstance(create, Observable):
-            create_ = cast(Observable[Any], create)
-
-            def default_create() -> Observable[Any]:
-                return create_
-
-            create_function = default_create
-        else:
-            create_function = create
-
-        mock_observer = scheduler.start(
-            create=create_function,
-            created=created,
-            subscribed=subscribed,
-            disposed=disposed,
-        )
-        start_called = True
-        return mock_observer.messages
-
-    def test_expected(
-        string: str,
-        lookup: dict[str | float, Any] | None = None,
-        error: Exception | None = None,
-    ) -> list[Recorded[Any]]:
-        messages = parse(
-            string,
-            timespan=timespan,
-            time_shift=subscribed,
-            lookup=lookup,
-            error=error,
-        )
-        return messages_to_records(messages)
-
-    def test_cold(
-        string: str,
-        lookup: dict[str | float, Any] | None = None,
-        error: Exception | None = None,
-    ) -> Observable[Any]:
-        check()
-        return reactivex.from_marbles(
-            string,
-            timespan=timespan,
-            lookup=lookup,
-            error=error,
-        )
-
-    def test_hot(
-        string: str,
-        lookup: dict[str | float, Any] | None = None,
-        error: Exception | None = None,
-    ) -> Observable[Any]:
-        check()
-        hot_obs: Observable[Any] = reactivex.hot(
-            string,
-            timespan=timespan,
-            duetime=subscribed,
-            lookup=lookup,
-            error=error,
-            scheduler=scheduler,
-        )
-        return hot_obs
-
-    try:
-        yield MarblesContext(test_start, test_cold, test_hot, test_expected)
-    finally:
-        outside_of_context = True
+    pass
 
 
 def messages_to_records(
@@ -178,21 +84,4 @@ def messages_to_records(
     Helper function to convert messages returned by parse() to a list of
     Recorded.
     """
-    records: list[Recorded[Any]] = []
-
-    for message in messages:
-        time, notification = message
-        if isinstance(time, (int | float)):
-            time_ = int(time)
-        else:
-            time_ = time.microseconds // 1000
-
-        if isinstance(notification, OnNext):
-            record = ReactiveTest.on_next(time_, notification.value)
-        elif isinstance(notification, OnError):
-            record = ReactiveTest.on_error(time_, notification.exception)
-        else:
-            record = ReactiveTest.on_completed(time_)
-        records.append(record)
-
-    return records
+    pass

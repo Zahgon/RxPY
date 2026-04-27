@@ -28,13 +28,7 @@ def delay_subscription_(
     Returns:
         Time-shifted sequence.
     """
-
-    def mapper(_: Any) -> Observable[_T]:
-        return reactivex.empty()
-
-    return source.pipe(
-        ops.delay_with_mapper(reactivex.timer(duetime, scheduler=scheduler), mapper)
-    )
+    pass
 
 
 __all__ = ["delay_subscription_"]

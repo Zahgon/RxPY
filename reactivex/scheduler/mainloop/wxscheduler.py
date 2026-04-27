@@ -36,7 +36,7 @@ class WxScheduler(PeriodicScheduler):
                 self.callback = callback
 
             def Notify(self) -> None:
-                self.callback()
+                pass
 
         self._timer_class = Timer
         self._timers: set[Timer] = set()
@@ -47,8 +47,7 @@ class WxScheduler(PeriodicScheduler):
         Should be called when destroying wx controls to prevent
         accessing dead wx objects in actions that might be pending.
         """
-        for timer in self._timers:
-            timer.Stop()  # type: ignore
+        pass
 
     def _wxtimer_schedule(
         self,

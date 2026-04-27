@@ -40,21 +40,7 @@ class PeriodicScheduler(Scheduler, abc.PeriodicSchedulerBase):
         def periodic(
             scheduler: abc.SchedulerBase, state: _TState | None = None
         ) -> Disposable | None:
-            if disp.is_disposed:
-                return None
-
-            now: datetime = scheduler.now
-
-            try:
-                state = action(state)
-            except Exception:
-                disp.dispose()
-                raise
-
-            time = seconds - (scheduler.now - now).total_seconds()
-            disp.disposable = scheduler.schedule_relative(time, periodic, state=state)
-
-            return None
+            pass
 
         disp.disposable = self.schedule_relative(period, periodic, state=state)
         return disp

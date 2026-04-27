@@ -39,20 +39,7 @@ def scan_(
         accumulation: _TState = cast(_TState, None)
 
         def projection(x: _T) -> _TState:
-            nonlocal has_accumulation
-            nonlocal accumulation
-
-            if has_accumulation:
-                accumulation = accumulator(accumulation, x)
-            else:
-                accumulation = (
-                    accumulator(cast(_TState, seed), x)
-                    if has_seed
-                    else cast(_TState, x)
-                )
-                has_accumulation = True
-
-            return accumulation
+            pass
 
         return source.pipe(ops.map(projection))
 

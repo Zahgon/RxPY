@@ -59,9 +59,7 @@ class MulticastingMixin(Generic[_T]):
             - :meth:`publish`
             - :meth:`ref_count`
         """
-        from reactivex import operators as ops
-
-        return self._as_observable().pipe(ops.share())
+        pass
 
     @overload
     def publish(self) -> ConnectableObservable[_T]: ...
@@ -171,15 +169,7 @@ class MulticastingMixin(Generic[_T]):
             - :meth:`publish`
             - :meth:`share`
         """
-        from reactivex import operators as ops
-
-        if mapper is None:
-            return self._as_observable().pipe(
-                ops.replay(buffer_size, window, scheduler=scheduler)
-            )
-        return self._as_observable().pipe(
-            ops.replay(buffer_size, window, mapper=mapper, scheduler=scheduler)
-        )
+        pass
 
     def multicast(
         self,

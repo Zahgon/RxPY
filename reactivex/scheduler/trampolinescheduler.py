@@ -109,8 +109,4 @@ class TrampolineScheduler(Scheduler):
         self, action: ScheduledAction[_TState]
     ) -> DisposableBase | None:
         """Method for testing the TrampolineScheduler."""
-
-        if self.schedule_required():
-            return self.schedule(action)
-
-        return action(self, None)
+        pass

@@ -35,22 +35,7 @@ def retry_(
         An observable sequence producing the elements of the given
         sequence repeatedly until it terminates successfully.
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[_T], scheduler_: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        # Create a fresh generator on every subscription so that the retry
-        # budget is not shared across resubscriptions (e.g. via repeat()).
-        if retry_count is None:
-            gen = infinite()
-        else:
-            gen = range(retry_count)
-
-        return reactivex.catch_with_iterable(source for _ in gen).subscribe(
-            observer, scheduler=scheduler_
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 __all__ = ["retry_"]

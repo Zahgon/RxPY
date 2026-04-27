@@ -460,10 +460,7 @@ def from_callable(
         An observable sequence containing the single element obtained by
         invoking the given supplier function.
     """
-
-    from .observable.returnvalue import from_callable_
-
-    return from_callable_(supplier, scheduler)
+    pass
 
 
 def from_callback(
@@ -484,9 +481,7 @@ def from_callback(
         the callback, produces an Observable sequence with a single
         value of the arguments to the callback as a list.
     """
-    from .observable.fromcallback import from_callback_
-
-    return from_callback_(func, mapper)
+    pass
 
 
 def from_future(future: "Future[_T]") -> Observable[_T]:
@@ -613,12 +608,7 @@ def from_marbles(
         The observable sequence whose elements are pulled from the
         given marble diagram string.
     """
-
-    from .observable.marbles import from_marbles as _from_marbles
-
-    return _from_marbles(
-        string, timespan, lookup=lookup, error=error, scheduler=scheduler
-    )
+    pass
 
 
 cold = alias("cold", "Alias for :func:`reactivex.from_marbles`.", from_marbles)
@@ -761,12 +751,7 @@ def hot(
         The observable sequence whose elements are pulled from the
         given marble diagram string.
     """
-
-    from .observable.marbles import hot as _hot
-
-    return _hot(
-        string, timespan, duetime, lookup=lookup, error=error, scheduler=scheduler
-    )
+    pass
 
 
 def if_then(
@@ -976,9 +961,7 @@ def range(
         An observable sequence that contains a range of sequential
         integral numbers.
     """
-    from .observable.range import range_
-
-    return range_(start, stop, step, scheduler)
+    pass
 
 
 def return_value(
@@ -1095,9 +1078,7 @@ def start_async(function_async: Callable[[], "Future[_T]"]) -> Observable[_T]:
         An observable sequence exposing the function's result value,
         or an exception.
     """
-    from .observable.startasync import start_async_
-
-    return start_async_(function_async)
+    pass
 
 
 def throw(
@@ -1281,9 +1262,7 @@ def zip(*args: Observable[Any]) -> Observable[tuple[Any, ...]]:
         An observable sequence containing the result of combining
         elements of the sources as a :class:`tuple`.
     """
-    from .observable.zip import zip_
-
-    return zip_(*args)
+    pass
 
 
 __all__ = [

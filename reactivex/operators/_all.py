@@ -24,18 +24,7 @@ def all_(source: Observable[_T], predicate: Predicate[_T]) -> Observable[bool]:
         An observable sequence containing a single element determining
         whether all elements in the source sequence pass the test.
     """
-
-    def filter_fn(v: _T):
-        return not predicate(v)
-
-    def mapping(b: bool) -> bool:
-        return not b
-
-    return source.pipe(
-        ops.filter(filter_fn),
-        ops.some(),
-        ops.map(mapping),
-    )
+    pass
 
 
 __all__ = ["all_"]

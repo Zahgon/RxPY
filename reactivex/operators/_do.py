@@ -100,8 +100,7 @@ def do_(observer: abc.ObserverBase[_T]) -> Callable[[Observable[_T]], Observable
         returns the source sequence with the side-effecting behavior
         applied.
     """
-
-    return do_action_(observer.on_next, observer.on_error, observer.on_completed)
+    pass
 
 
 def do_after_next(
@@ -112,20 +111,7 @@ def do_after_next(
 
     after_next -- Action to invoke on each element after it has been emitted
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[_T], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        def on_next(value: _T):
-            try:
-                observer.on_next(value)
-                after_next(value)
-            except Exception as e:  # pylint: disable=broad-except
-                observer.on_error(e)
-
-        return source.subscribe(on_next, observer.on_error, observer.on_completed)
-
-    return Observable(subscribe)
+    pass
 
 
 def do_on_subscribe(source: Observable[Any], on_subscribe: typing.Action):
@@ -137,19 +123,7 @@ def do_on_subscribe(source: Observable[Any], on_subscribe: typing.Action):
     Args:
         on_subscribe: Action to invoke on subscription
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[Any], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        on_subscribe()
-        return source.subscribe(
-            observer.on_next,
-            observer.on_error,
-            observer.on_completed,
-            scheduler=scheduler,
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 def do_on_dispose(source: Observable[Any], on_dispose: typing.Action):
@@ -161,26 +135,7 @@ def do_on_dispose(source: Observable[Any], on_dispose: typing.Action):
     Args:
         on_dispose: Action to invoke on disposal
     """
-
-    class OnDispose(abc.DisposableBase):
-        def dispose(self) -> None:
-            on_dispose()
-
-    def subscribe(
-        observer: abc.ObserverBase[Any], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        composite_disposable = CompositeDisposable()
-        composite_disposable.add(OnDispose())
-        subscription = source.subscribe(
-            observer.on_next,
-            observer.on_error,
-            observer.on_completed,
-            scheduler=scheduler,
-        )
-        composite_disposable.add(subscription)
-        return composite_disposable
-
-    return Observable(subscribe)
+    pass
 
 
 def do_on_terminate(source: Observable[Any], on_terminate: typing.Action):
@@ -191,31 +146,7 @@ def do_on_terminate(source: Observable[Any], on_terminate: typing.Action):
 
     on_terminate -- Action to invoke when on_complete or throw is called
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[Any], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        def on_completed():
-            try:
-                on_terminate()
-            except Exception as err:  # pylint: disable=broad-except
-                observer.on_error(err)
-            else:
-                observer.on_completed()
-
-        def on_error(exception: Exception):
-            try:
-                on_terminate()
-            except Exception as err:  # pylint: disable=broad-except
-                observer.on_error(err)
-            else:
-                observer.on_error(exception)
-
-        return source.subscribe(
-            observer.on_next, on_error, on_completed, scheduler=scheduler
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 def do_after_terminate(source: Observable[Any], after_terminate: typing.Action):
@@ -226,29 +157,7 @@ def do_after_terminate(source: Observable[Any], after_terminate: typing.Action):
 
     on_terminate -- Action to invoke after on_complete or throw is called
     """
-
-    def subscribe(
-        observer: abc.ObserverBase[Any], scheduler: abc.SchedulerBase | None = None
-    ) -> abc.DisposableBase:
-        def on_completed():
-            observer.on_completed()
-            try:
-                after_terminate()
-            except Exception as err:  # pylint: disable=broad-except
-                observer.on_error(err)
-
-        def on_error(exception: Exception) -> None:
-            observer.on_error(exception)
-            try:
-                after_terminate()
-            except Exception as err:  # pylint: disable=broad-except
-                observer.on_error(err)
-
-        return source.subscribe(
-            observer.on_next, on_error, on_completed, scheduler=scheduler
-        )
-
-    return Observable(subscribe)
+    pass
 
 
 @curry_flip
@@ -277,50 +186,7 @@ def do_finally(
     Returns:
         An observable sequence with the finally action applied.
     """
-
-    class OnDispose(abc.DisposableBase):
-        def __init__(self, was_invoked: list[bool]):
-            self.was_invoked = was_invoked
-
-        def dispose(self) -> None:
-            if not self.was_invoked[0]:
-                finally_action()
-                self.was_invoked[0] = True
-
-    def subscribe(
-        observer: abc.ObserverBase[_T],
-        scheduler: abc.SchedulerBase | None = None,
-    ) -> abc.DisposableBase:
-        was_invoked = [False]
-
-        def on_completed():
-            observer.on_completed()
-            try:
-                if not was_invoked[0]:
-                    finally_action()
-                    was_invoked[0] = True
-            except Exception as err:  # pylint: disable=broad-except
-                observer.on_error(err)
-
-        def on_error(exception: Exception):
-            observer.on_error(exception)
-            try:
-                if not was_invoked[0]:
-                    finally_action()
-                    was_invoked[0] = True
-            except Exception as err:  # pylint: disable=broad-except
-                observer.on_error(err)
-
-        composite_disposable = CompositeDisposable()
-        composite_disposable.add(OnDispose(was_invoked))
-        subscription = source.subscribe(
-            observer.on_next, on_error, on_completed, scheduler=scheduler
-        )
-        composite_disposable.add(subscription)
-
-        return composite_disposable
-
-    return Observable(subscribe)
+    pass
 
 
 __all__ = [

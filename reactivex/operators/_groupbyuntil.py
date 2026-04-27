@@ -59,7 +59,7 @@ def group_by_until_(
     element_mapper_ = element_mapper or cast(Mapper[_T, _TValue], identity)
 
     def default_subject_mapper() -> Subject[_TValue]:
-        return Subject()
+        pass
 
     subject_mapper_ = subject_mapper or default_subject_mapper
 
